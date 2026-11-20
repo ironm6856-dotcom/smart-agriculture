@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Agro Weather & Advisory | AI-Based Smart Agriculture Assistant{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-title">
+    <h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2">
+        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+      </svg>
+      Agro-Meteorology &amp; Farm Weather Advisory
+    </h2>
+    <p>Live meteorological feeds, precipitation forecasts, and real-time operational field advisories</p>
+  </div>
+  <div>
+    <!-- Regional Selector -->
+    <form method="GET" action="{{ url_for('weather_page') }}" style="display: flex; gap: 8px;">
+      <select name="region" class="form-control" onchange="this.form.submit()" style="padding: 6px 12px; font-weight: 600;">
+        <option value="hyderabad" {% if current_region == 'hyderabad' %}selected{% endif %}>Hyderabad (Telangana)</option>
+        <option value="guntur" {% if current_region == 'guntur' %}selected{% endif %}>Guntur (Andhra Pradesh)</option>
+        <option value="ludhiana" {% if current_region == 'ludhiana' %}selected{% endif %}>Ludhiana (Punjab)</option>
+        <option value="pune" {% if current_region == 'pune' %}selected{% endif %}>Pune (Maharashtra)</option>
+        <option value="bhopal" {% if current_region == 'bhopal' %}selected{% endif %}>Bhopal (Madhya Pradesh)</option>
+        <option value="coimbatore" {% if current_region == 'coimbatore' %}selected{% endif %}>Coimbatore (Tamil Nadu)</option>
+      </select>
+    </form>
+  </div>
+</div>
+
+<!-- Current Weather Cards -->
+<div class="grid-4">
+  <div class="card" style="text-align: center; border-top: 4px solid #059669;">
+    <div style="font-size: 0.82rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Temperature</div>
+    <div style="font-size: 2.2rem; font-weight: 800; color: #064e3b; margin: 4px 0;">{{ weather.temperature }}°C</div>
+    <span style="font-size: 0.8rem; color: #059669;">Favorable for active growth</span>
+  </div>
+
+  <div class="card" style="text-align: center; border-top: 4px solid #0284c7;">
+    <div style="font-size: 0.82rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Relative Humidity</div>
+    <div style="font-size: 2.2rem; font-weight: 800; color: #0284c7; margin: 4px 0;">{{ weather.relative_humidity }}%</div>
+    <span style="font-size: 0.8rem; color: #0284c7;">Canopy transpiration active</span>
+  </div>
+
+  <div class="card" style="text-align: center; border-top: 4px solid #d97706;">
+    <div style="font-size: 0.82rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Wind Speed</div>
+    <div style="font-size: 2.2rem; font-weight: 800; color: #d97706; margin: 4px 0;">{{ weather.wind_speed_kmh }} <span style="font-size: 1rem;">km/h</span></div>
+    <span style="font-size: 0.8rem; color: #d97706;">Safe spray limit: &lt;15 km/h</span>
+  </div>
+
+  <div class="card" style="text-align: center; border-top: 4px solid #10b981;">
+    <div style="font-size: 0.82rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Current Precipitation</div>
+    <div style="font-size: 2.2rem; font-weight: 800; color: #10b981; margin: 4px 0;">{{ weather.current_precipitation }} <span style="font-size: 1rem;">mm</span></div>
+    <span style="font-size: 0.8rem; color: #10b981;">No active downpour</span>
+  </div>
+</div>
+
+<!-- 5-Day Agro-Meteorological Forecast -->
+<div class="card" style="margin-bottom: 24px;">
+  <h3 style="font-size: 1.2rem; color: #064e3b; margin-bottom: 16px;">5-Day Agricultural Weather Outlook</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px;">
+    {% for day in weather.forecast %}
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 16px; text-align: center;">
+      <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">{{ day.date }}</div>
+      <div style="font-size: 1.4rem; font-weight: 800; color: #065f46; margin: 8px 0;">{{ day.max_temp }}° / {{ day.min_temp }}°</div>
+      <div style="font-size: 0.85rem; color: #0284c7; font-weight: 600;">Rain: {{ day.precip_sum }} mm</div>
+      <div style="font-size: 0.78rem; color: #64748b; margin-top: 4px;">Probability: {{ day.rain_prob }}%</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Operational Farm Advisories -->
+<div class="card">
+  <h3 style="font-size: 1.2rem; color: #064e3b; margin-bottom: 14px;">Agro-Met Field Operational Advisories</h3>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    {% for adv in weather.advisories %}
+    <div style="padding: 16px; border-radius: var(--radius-sm); background: #f0fdf4; border-left: 4px solid #059669;">
+      <h4 style="color: #064e3b; font-size: 1rem; margin-bottom: 4px;">{{ adv.title }}</h4>
+      <p style="font-size: 0.9rem; color: #1e293b;">{{ adv.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

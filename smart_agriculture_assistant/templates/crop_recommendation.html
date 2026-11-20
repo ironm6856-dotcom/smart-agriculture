@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Crop Recommendation | AI-Based Smart Agriculture Assistant{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-title">
+    <h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2">
+        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+      Machine Learning Crop Recommendation Engine
+    </h2>
+    <p>Predict optimal crops based on soil nutrients (N, P, K), soil pH, and local weather patterns</p>
+  </div>
+  <div>
+    <span class="badge badge-green">Model: Random Forest (22 Crop Classes)</span>
+  </div>
+</div>
+
+<div class="grid-2">
+  <!-- Input Form -->
+  <div class="card">
+    <h3 style="font-size: 1.2rem; color: #064e3b; margin-bottom: 16px;">Soil &amp; Environmental Inputs</h3>
+    
+    <form id="cropForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nitrogen">Nitrogen (N) - kg/ha</label>
+          <input type="number" step="any" class="form-control" id="nitrogen" name="nitrogen" value="85" required min="0" max="250">
+          <small style="color: #64748b; font-size: 0.75rem;">Typical: 20 - 140</small>
+        </div>
+        <div class="form-group">
+          <label for="phosphorus">Phosphorus (P) - kg/ha</label>
+          <input type="number" step="any" class="form-control" id="phosphorus" name="phosphorus" value="48" required min="0" max="250">
+          <small style="color: #64748b; font-size: 0.75rem;">Typical: 10 - 140</small>
+        </div>
+        <div class="form-group">
+          <label for="potassium">Potassium (K) - kg/ha</label>
+          <input type="number" step="any" class="form-control" id="potassium" name="potassium" value="42" required min="0" max="300">
+          <small style="color: #64748b; font-size: 0.75rem;">Typical: 15 - 200</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="temperature">Ambient Temp (°C)</label>
+          <input type="number" step="any" class="form-control" id="temperature" name="temperature" value="25.5" required min="5" max="50">
+        </div>
+        <div class="form-group">
+          <label for="humidity">Relative Humidity (%)</label>
+          <input type="number" step="any" class="form-control" id="humidity" name="humidity" value="82.0" required min="10" max="100">
+        </div>
+        <div class="form-group">
+          <label for="ph">Soil pH Level</label>
+          <input type="number" step="any" class="form-control" id="ph" name="ph" value="6.5" required min="3" max="12">
+          <small style="color: #64748b; font-size: 0.75rem;">Ideal: 5.5 - 7.5</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="rainfall">Annual Rainfall (mm)</label>
+        <input type="number" step="any" class="form-control" id="rainfall" name="rainfall" value="210" required min="10" max="1000">
+        <small style="color: #64748b; font-size: 0.75rem;">Dryland: &lt;75mm | Irrigated: 100-300mm</small>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+        Predict Best Crop
+      </button>
+    </form>
+  </div>
+
+  <!-- Dynamic Result Display -->
+  <div>
+    <div id="cropResultBox" class="result-box">
+      <span class="badge badge-green" style="font-size: 0.85rem; padding: 6px 12px;">Top AI Recommendation</span>
+      <h2 id="recCropName" style="font-size: 2.2rem; color: #064e3b; margin: 10px 0 4px 0;">--</h2>
+      <p style="font-size: 1.1rem; color: #059669; font-weight: 600;" id="recConfidence">--</p>
+      
+      <div style="margin: 16px 0; padding: 14px; background: white; border-radius: var(--radius-sm); border: 1px solid #d1fae5;">
+        <h4 style="font-size: 0.9rem; color: #475569; text-transform: uppercase; margin-bottom: 4px;">Viable Runner-Up Alternatives</h4>
+        <p id="recAlternatives" style="font-size: 0.95rem; color: #0f172a; font-weight: 500;">--</p>
+      </div>
+
+      <div style="font-size: 0.88rem; color: #166534; line-height: 1.5;">
+        <strong>Agronomic Guidance:</strong> The selected crop displays physiological congruence with your soil's available nutrient balance and anticipated precipitation. Ensure basal phosphorus placement at sowing and schedule nitrogen split applications.
+      </div>
+    </div>
+
+    <!-- Educational Guide Card -->
+    <div class="card" style="margin-top: 20px;">
+      <h4 style="color: #064e3b; margin-bottom: 8px;">Why Soil-Balanced Crop Selection Matters</h4>
+      <p style="font-size: 0.88rem; color: #475569; margin-bottom: 12px;">
+        Choosing crops tuned to native nitrogen and moisture regimes cuts fertilizer wastage by up to 30% and mitigates climate-driven yield failure.
+      </p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <span class="badge badge-blue">Cereals: Rice, Maize, Wheat</span>
+        <span class="badge badge-green">Legumes: Chickpea, Lentil, Mungbean</span>
+        <span class="badge badge-amber">Commercial: Cotton, Jute, Coffee</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

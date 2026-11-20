@@ -1,0 +1,58 @@
+{
+  "Tomato Early Blight": {
+    "pathogen": "Alternaria solani (Fungus)",
+    "affected_crop": "Tomato (Solanum lycopersicum)",
+    "symptoms": "Dark concentric brown rings (\"target-board\" spots) primarily on older lower leaves, progressive yellowing, leaf defoliation.",
+    "organic_treatment": "Apply Copper Hydroxide spray; prune lower foliage to improve air circulation; apply neem seed kernel extract (NSKE 5%).",
+    "chemical_treatment": "Mancozeb 75% WP @ 2.5 g/L or Azoxystrobin 23% SC @ 1 ml/L spray at 10-14 day intervals.",
+    "prevention": "Adopt drip irrigation to keep canopy dry; maintain 2-year crop rotation avoiding Solanaceae family."
+  },
+  "Tomato Late Blight": {
+    "pathogen": "Phytophthora infestans (Oomycete)",
+    "affected_crop": "Tomato (Solanum lycopersicum)",
+    "symptoms": "Large irregular water-soaked pale-green lesions turning dark brown/black; white fungal bloom on underside during humid mornings.",
+    "organic_treatment": "Trichoderma viride bio-fungicide soil/foliar application; remove and destroy infected plant debris immediately.",
+    "chemical_treatment": "Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L or Cymoxanil + Mancozeb @ 2 g/L.",
+    "prevention": "Avoid overhead sprinkler irrigation; space plants 60 cm apart; plant resistant hybrid varieties."
+  },
+  "Tomato Healthy": {
+    "pathogen": "None (Vigorous Canopy)",
+    "affected_crop": "Tomato",
+    "symptoms": "Uniform deep green leaves, turgid foliage, robust petiole architecture without necrotic lesions.",
+    "organic_treatment": "Maintain balanced vermicompost and biofertilizer (Azotobacter + PSB) applications.",
+    "chemical_treatment": "No fungicide needed. Routine micronutrient spray (Zinc + Boron 0.2%) during flowering.",
+    "prevention": "Regular weekly field scouting and balanced NPK fertigation."
+  },
+  "Potato Early Blight": {
+    "pathogen": "Alternaria solani",
+    "affected_crop": "Potato (Solanum tuberosum)",
+    "symptoms": "Small brown circular spots with concentric rings expanding on foliage; leaf margins curl upward.",
+    "organic_treatment": "Bordeaux mixture (1%) spray; mulching with paddy straw to prevent spore splash from soil.",
+    "chemical_treatment": "Chlorothalonil 75% WP @ 2 g/L or Difenoconazole 25% EC @ 0.5 ml/L.",
+    "prevention": "Use certified pathogen-free seed tubers; destroy solanaceous weed hosts."
+  },
+  "Potato Late Blight": {
+    "pathogen": "Phytophthora infestans",
+    "affected_crop": "Potato",
+    "symptoms": "Rapid water-soaked lesions on leaf tips turning purplish-brown; sudden blighting of entire field in cool wet weather.",
+    "organic_treatment": "Spray Pseudomonas fluorescens @ 5 g/L; eradicate initial focus plants.",
+    "chemical_treatment": "Dimethomorph 50% WP @ 1 g/L or Fenamidone + Mancozeb @ 2.5 g/L.",
+    "prevention": "Strict preventive spraying upon forecast of cool foggy weather (>90% humidity, 15-22 C)."
+  },
+  "Corn Common Rust": {
+    "pathogen": "Puccinia sorghi (Fungus)",
+    "affected_crop": "Corn / Maize (Zea mays)",
+    "symptoms": "Golden-brown to cinnamon-brown powdery pustules scattered across both upper and lower leaf surfaces.",
+    "organic_treatment": "Foliar application of Bacillus subtilis culture; burn severely rusted residue post-harvest.",
+    "chemical_treatment": "Propiconazole 25% EC @ 1 ml/L or Tebuconazole 25.9% EC @ 1.25 ml/L.",
+    "prevention": "Sow early in the season to evade peak airborne spore flights; plant rust-tolerant hybrids."
+  },
+  "Apple Scab": {
+    "pathogen": "Venturia inaequalis",
+    "affected_crop": "Apple (Malus domestica)",
+    "symptoms": "Olive-green velvety fungal spots that become corky, scab-like, and puckered on leaves and young fruitlets.",
+    "organic_treatment": "Lime sulfur dormant spray; raking and composting fallen orchard leaves to eliminate overwintering ascospores.",
+    "chemical_treatment": "Captan 50% WP @ 2.5 g/L or Dithianon 70% WG @ 1 g/L at green-tip bud stage.",
+    "prevention": "Prune trees to open canopy to sunlight; select resistant cultivars."
+  }
+}

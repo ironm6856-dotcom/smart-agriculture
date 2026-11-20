@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Miracle - Autonomous Agentic Clinical Triage &amp; Medication Procurement</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Styles: Blue & White Palette, Cambria Math Font, Zero Emojis -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+  <!-- Clinical Navigation Bar -->
+  <header class="bg-white border-b border-sky-100 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo & System Badge -->
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-md shadow-sky-600/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xl font-bold tracking-tight text-slate-900">Medical Miracle</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-sky-50 text-sky-800 border border-sky-200">
+              v4.2 Agentic OS
+            </span>
+          </div>
+          <p class="text-xs text-slate-500">Clinical Pharmacotherapy &amp; Inventory Orchestrator</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs (Home Page vs Sample Dashboard) -->
+      <nav class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+        <button id="tab-nav-home" class="px-5 py-2 text-sm font-bold text-sky-700 bg-white rounded-lg shadow-sm border border-slate-200 transition">
+          <svg class="w-4 h-4 inline-block mr-1.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home Page
+        </button>
+        <button id="tab-nav-dashboard" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-sky-700 rounded-lg transition">
+          <svg class="w-4 h-4 inline-block mr-1.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          Sample Dashboard
+        </button>
+      </nav>
+
+      <!-- Localization & Currency Utility Controls -->
+      <div class="hidden md:flex items-center space-x-3">
+        <div class="flex items-center space-x-2 text-xs bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg text-slate-600">
+          <div class="w-2.5 h-2.5 rounded-full bg-sky-500 agent-live-beacon"></div>
+          <span class="font-semibold text-slate-700">5 Micro-Agents Online</span>
+        </div>
+
+        <select id="currency-select" class="text-xs bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-bold text-slate-800 focus:outline-none focus:border-sky-500">
+          <option value="USD">USD ($)</option>
+          <option value="INR">INR (₹)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="EUR">EUR (€)</option>
+        </select>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="flex-grow">
+    
+    <!-- ==================== HOME PAGE VIEW ==================== -->
+    <div id="view-home">
+      
+      <!-- Hero Section -->
+      <section class="bg-gradient-to-b from-sky-50/60 to-white border-b border-sky-100 py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <!-- Left Hero Content -->
+            <div class="lg:col-span-7 space-y-6">
+              <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100/80 border border-sky-300 text-sky-900 text-xs font-bold">
+                <svg class="w-4 h-4 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>Clinical Decision Support &amp; Pharmacy Logistics Engine</span>
+              </div>
+
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                Autonomous Clinical Triage &amp; Medication Intelligence
+              </h1>
+
+              <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                Describe your symptoms. Our specialized multi-agent AI pipeline calculates urgency, matches evidence-based medicines, compares real-time retail pricing, dictates precise posology, and pinpoints inventory at local pharmacies.
+              </p>
+
+              <!-- Operational Proof Points -->
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+                <div class="bg-white p-3.5 rounded-xl border border-sky-100 shadow-sm">
+                  <span class="block text-2xl font-black text-sky-700">99.4%</span>
+                  <span class="text-xs text-slate-500 font-semibold">FDA Interaction Accuracy</span>
+                </div>
+                <div class="bg-white p-3.5 rounded-xl border border-sky-100 shadow-sm">
+                  <span class="block text-2xl font-black text-sky-700">76%</span>
+                  <span class="text-xs text-slate-500 font-semibold">Average Generic Savings</span>
+                </div>
+                <div class="bg-white p-3.5 rounded-xl border border-sky-100 shadow-sm col-span-2 sm:col-span-1">
+                  <span class="block text-2xl font-black text-sky-700">45 Min</span>
+                  <span class="text-xs text-slate-500 font-semibold">Local Pharmacy Dispatch</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Hero Imagery -->
+            <div class="lg:col-span-5 relative">
+              <div class="relative rounded-2xl overflow-hidden border-2 border-sky-100 shadow-xl bg-white">
+                <img 
+                  src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80" 
+                  alt="Clinical AI Consultation" 
+                  class="w-full h-80 object-cover"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-6">
+                  <div class="text-white">
+                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-sky-300">Evidence-Based Medicine</span>
+                    <h3 class="text-lg font-bold">Multi-Agent Posology &amp; Pharmacy Routing</h3>
+                    <p class="text-xs text-slate-300 mt-1">Cross-referenced with FDA National Drug Code Directory and local pharmacy inventory feeds.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Multi-Agent Microservice Topology (5 Agents) -->
+      <section class="py-8 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm font-bold uppercase tracking-wider text-sky-800">Orchestrated Agentic Topology</h3>
+              <p class="text-xs text-slate-500">Autonomous clinical micro-agents executing in coordinated pipeline</p>
+            </div>
+            <span class="text-xs font-mono text-slate-400">Zero-Hallucination Guardrails</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3" id="agent-architecture-grid">
+            <!-- Dynamically populated via app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Symptom Input Console -->
+      <section class="py-12 bg-slate-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="white-clinical-card rounded-2xl border-2 border-sky-200 p-6 sm:p-8 bg-white shadow-lg">
+            
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+              <div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Clinical Symptom Intake Console</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Enter symptoms in natural language. The system will triage acuity, suggest medications, calculate prices, and locate stock.</p>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form id="symptom-triage-form" class="space-y-6">
+              
+              <div>
+                <label for="symptoms-input" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Primary Symptoms &amp; Chief Complaint Description
+                </label>
+                <div class="relative">
+                  <textarea 
+                    id="symptoms-input" 
+                    rows="3" 
+                    placeholder="E.g., I have had a severe throbbing headache with sensitivity to light since yesterday morning, accompanied by mild nausea..." 
+                    class="w-full px-4 py-3 rounded-xl border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition bg-slate-50/50"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Quick Symptom Presets -->
+              <div>
+                <span class="block text-xs font-semibold text-slate-500 mb-2">Clinical Test Presets:</span>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" class="symptom-chip text-xs px-3 py-1.5 rounded-lg bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100 font-medium transition" data-symptom="Severe throbbing unilateral headache with photophobia and nausea">
+                    Acute Migraine &amp; Cephalalgia
+                  </button>
+                  <button type="button" class="symptom-chip text-xs px-3 py-1.5 rounded-lg bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100 font-medium transition" data-symptom="Severe burning sensation in chest and throat after meals with acid regurgitation">
+                    Acid Reflux &amp; GERD
+                  </button>
+                  <button type="button" class="symptom-chip text-xs px-3 py-1.5 rounded-lg bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100 font-medium transition" data-symptom="Continuous sneezing, runny nose, itchy watery red eyes from spring pollen">
+                    Seasonal Allergic Rhinitis
+                  </button>
+                  <button type="button" class="symptom-chip text-xs px-3 py-1.5 rounded-lg bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100 font-medium transition" data-symptom="Body aches, dry cough, sore throat, and low-grade fever of 38.5 Celsius">
+                    Viral Coryza &amp; Fever
+                  </button>
+                  <button type="button" class="symptom-chip text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-800 border border-red-200 hover:bg-red-100 font-bold transition" data-symptom="Acute crushing chest pain radiating to left arm and shortness of breath">
+                    [Safety Test] Acute Chest Pain
+                  </button>
+                </div>
+              </div>
+
+              <!-- Patient Context Parameters -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Patient Demographics</label>
+                  <select id="patient-age-param" class="w-full text-xs p-2.5 rounded-lg border border-slate-300 bg-white">
+                    <option value="adult">Adult (18 - 64 years)</option>
+                    <option value="geriatric">Geriatric (65+ years)</option>
+                    <option value="adolescent">Adolescent (12 - 17 years)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Symptom Duration</label>
+                  <select id="patient-duration-param" class="w-full text-xs p-2.5 rounded-lg border border-slate-300 bg-white">
+                    <option value="acute">Acute (&lt; 24 Hours)</option>
+                    <option value="subacute">Subacute (1 to 3 Days)</option>
+                    <option value="persistent">Persistent (Greater than 1 Week)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Known Drug Allergies</label>
+                  <input type="text" id="patient-allergy-param" placeholder="E.g., None, Penicillin, NSAIDs" class="w-full text-xs p-2.5 rounded-lg border border-slate-300 bg-white">
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-2">
+                <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center space-x-2 transition">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                  </svg>
+                  <span>Initiate Multi-Agent Analysis</span>
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+
+          <!-- Live Agent Execution Terminal / Console -->
+          <div id="agent-live-console" class="mt-8 hidden">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-2">
+                <div class="w-2.5 h-2.5 rounded-full bg-sky-600 agent-live-beacon"></div>
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-800">
+                  Live Agent Pipeline Execution
+                </h3>
+              </div>
+              <span class="text-xs font-mono text-slate-500">Latency &bull; Safety &bull; Grounding</span>
+            </div>
+
+            <div id="agent-orchestration-steps" class="space-y-2">
+              <!-- Dynamically rendered via app.js -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Clinical Results & Medication Recommendations Section -->
+      <section id="clinical-results-container" class="py-12 bg-white border-t border-slate-200 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <!-- Clinical Summary Banner -->
+          <div class="white-clinical-card rounded-2xl border border-sky-200 p-6 mb-8 bg-gradient-to-r from-sky-50/70 via-white to-sky-50/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <span id="result-category-label" class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-sky-100 text-sky-800 border border-sky-200">
+                  Neurological Assessment
+                </span>
+                <h2 id="result-diagnosis-title" class="text-2xl font-bold text-slate-900 mt-2">
+                  Acute Tension Cephalalgia or Episodic Migraine
+                </h2>
+                <p id="result-notes-desc" class="text-xs text-slate-600 mt-1 max-w-3xl">
+                  First-line non-opioid analgesia recommended. Hydration assessment and rest in low-stimulus environment indicated.
+                </p>
+              </div>
+
+              <div class="text-left md:text-right shrink-0">
+                <span class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold block">Consensus Metric</span>
+                <span id="result-confidence-metric" class="text-2xl font-black text-sky-700">97% AI Consensus</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls: Category Filter (All, OTC, Prescription) -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Recommended Pharmaceutical Therapies</h3>
+              <p class="text-xs text-slate-500">Includes active ingredients, fair-market price arbitrage, posology, and verified local inventory.</p>
+            </div>
+
+            <div class="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200">
+              <button class="filter-btn px-3 py-1.5 text-xs font-bold rounded-md bg-sky-600 text-white transition" data-filter="all">
+                All Formulations
+              </button>
+              <button class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 border border-slate-200 transition" data-filter="otc">
+                Over-The-Counter (OTC)
+              </button>
+              <button class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 border border-slate-200 transition" data-filter="rx">
+                Prescription (Rx)
+              </button>
+            </div>
+          </div>
+
+          <!-- Medication Cards List -->
+          <div id="medication-cards-list">
+            <!-- Dynamically populated via app.js -->
+          </div>
+
+          <!-- Clinical Disclaimer Footer -->
+          <div class="mt-8 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 flex items-start space-x-3">
+            <svg class="w-5 h-5 text-sky-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p>
+              <strong>Regulatory &amp; Clinical Disclaimer:</strong> Medical Miracle is an AI-powered Clinical Decision Support System. While pharmacotherapy regimens and inventory feeds are matched against verified pharmacological databases and local pharmacy APIs, this system is for informational triage and should not replace emergency medical care or formal clinical evaluation by a licensed physician.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ==================== SAMPLE DASHBOARD VIEW ==================== -->
+    <div id="view-dashboard" class="hidden py-8 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
+        <!-- Dashboard Header -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-sky-100 text-sky-800 border border-sky-200">
+                Enterprise Clinical Ops
+              </span>
+              <span class="text-xs text-slate-500 font-semibold">&bull; Real-Time Telemetry</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 mt-1">Medical Miracle Clinical Operations Dashboard</h2>
+            <p class="text-xs text-slate-600">Multi-agent clinical throughput, safety interlocks, price arbitrage metrics, and fulfillment status.</p>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <button onclick="window.print()" class="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-sm flex items-center space-x-1.5 transition">
+              <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path d="M6 9V2h12v7"></path>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              <span>Export Audit Report</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric KPI Cards Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <div class="dashboard-stat-card rounded-xl p-5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Triage Inquiries</span>
+              <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <div class="text-2xl font-black text-slate-900 mt-2">14,892</div>
+            <div class="text-xs text-sky-700 font-semibold mt-1">+18.4% this month</div>
+          </div>
+
+          <div class="dashboard-stat-card rounded-xl p-5 border-l-4 !border-l-sky-500">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Clinical Consensus</span>
+              <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="text-2xl font-black text-slate-900 mt-2">99.4%</div>
+            <div class="text-xs text-slate-600 font-semibold mt-1">Zero red-flag misses</div>
+          </div>
+
+          <div class="dashboard-stat-card rounded-xl p-5 border-l-4 !border-l-sky-700">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Generic Cost Arbitrage</span>
+              <svg class="w-4 h-4 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <div class="text-2xl font-black text-slate-900 mt-2">76.2%</div>
+            <div class="text-xs text-slate-600 font-semibold mt-1">Average patient savings</div>
+          </div>
+
+          <div class="dashboard-stat-card rounded-xl p-5 border-l-4 !border-l-slate-700">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pharmacy Dispatch Time</span>
+              <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="text-2xl font-black text-slate-900 mt-2">28.4 Min</div>
+            <div class="text-xs text-slate-600 font-semibold mt-1">Within 5-mile radius</div>
+          </div>
+
+        </div>
+
+        <!-- Agent Microservices Telemetry Grid -->
+        <div class="white-clinical-card rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Active Multi-Agent Telemetry &amp; Microservice Health</h3>
+              <p class="text-xs text-slate-500">Real-time status of the 5 autonomous clinical agents</p>
+            </div>
+            <span class="text-xs font-mono font-bold text-sky-800 bg-sky-50 px-2.5 py-1 rounded border border-sky-200">
+              Cluster Status: Optimal
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
+            
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>Agent 1: Triage</span>
+                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+              </div>
+              <div class="mt-2 text-slate-500">Latency: <strong class="text-slate-800">180ms</strong></div>
+              <div class="text-slate-500">Guardrails: <strong class="text-sky-700">100% Active</strong></div>
+            </div>
+
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>Agent 2: Pharmacotherapy</span>
+                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+              </div>
+              <div class="mt-2 text-slate-500">NDC Index Hit: <strong class="text-slate-800">99.8%</strong></div>
+              <div class="text-slate-500">Formulations: <strong class="text-sky-700">12,400+</strong></div>
+            </div>
+
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>Agent 3: Posology</span>
+                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+              </div>
+              <div class="mt-2 text-slate-500">Safety Bounds: <strong class="text-slate-800">Verified</strong></div>
+              <div class="text-slate-500">Food Matrix: <strong class="text-sky-700">Active</strong></div>
+            </div>
+
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>Agent 4: Pricing</span>
+                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+              </div>
+              <div class="mt-2 text-slate-500">API Sync: <strong class="text-slate-800">Real-Time</strong></div>
+              <div class="text-slate-500">Retail Feeds: <strong class="text-sky-700">4 Connected</strong></div>
+            </div>
+
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>Agent 5: Geo-Inventory</span>
+                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+              </div>
+              <div class="mt-2 text-slate-500">Radius: <strong class="text-slate-800">5.0 Miles</strong></div>
+              <div class="text-slate-500">Couriers: <strong class="text-sky-700">3 Available</strong></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Recent Clinical Inquiries & Pharmacy Dispatch Table -->
+        <div class="white-clinical-card rounded-2xl border border-slate-200 overflow-hidden">
+          <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Recent Triage Inquiries &amp; Fulfillment Streams</h3>
+              <p class="text-xs text-slate-500">Live operational ledger of symptom inputs, generated regimens, and pharmacy assignments</p>
+            </div>
+            <span class="text-xs text-slate-400 font-mono">Live Stream</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-600 border-b border-slate-200">
+                  <th class="py-3 px-4">Triage ID</th>
+                  <th class="py-3 px-4">Timestamp</th>
+                  <th class="py-3 px-4">Symptoms Presented</th>
+                  <th class="py-3 px-4">Triage Acuity</th>
+                  <th class="py-3 px-4">Suggested Regimen</th>
+                  <th class="py-3 px-4">Fulfillment Partner</th>
+                  <th class="py-3 px-4">Status</th>
+                </tr>
+              </thead>
+              <tbody id="dashboard-triage-logs">
+                <!-- Dynamically populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pharmacy Network Map / Fulfillment Coverage Preview -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-8 white-clinical-card rounded-2xl p-6 border border-slate-200">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Regional Pharmacy Partner Inventory Status</h3>
+                <p class="text-xs text-slate-500">Synchronized API stock feed for immediate customer fulfillment</p>
+              </div>
+              <span class="text-xs font-mono font-bold text-sky-800 bg-sky-50 px-2 py-1 rounded">Stock Feed: 99.8% Online</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                <div>
+                  <h4 class="font-bold text-slate-800">CVS Caremark Pharmacy &bull; Store #4412</h4>
+                  <p class="text-slate-500">742 Market Street &bull; 0.6 miles away &bull; 24/7 Drive-Thru</p>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold font-mono">48 Units In Stock</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">Average Fulfillment: 12 mins</p>
+                </div>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                <div>
+                  <h4 class="font-bold text-slate-800">Walgreens Community Pharmacy &bull; Store #1809</h4>
+                  <p class="text-slate-500">1204 Pine Boulevard &bull; 1.2 miles away &bull; Open until 10:00 PM</p>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold font-mono">34 Units In Stock</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">Average Fulfillment: 18 mins</p>
+                </div>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                <div>
+                  <h4 class="font-bold text-slate-800">Apollo Health Pharmacy &bull; Healthcare Center</h4>
+                  <p class="text-slate-500">305 Medical Center Way &bull; 1.8 miles away &bull; Full Compounding</p>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold font-mono">22 Units In Stock</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">Average Fulfillment: 25 mins</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clinical Safety Intercept Panel -->
+          <div class="lg:col-span-4 white-clinical-card rounded-2xl p-6 border border-slate-200 bg-sky-50/30">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Safety &amp; Compliance Oversight</h3>
+            <p class="text-xs text-slate-500 mb-4">Autonomous red-flag interception statistics</p>
+
+            <div class="space-y-3 text-xs">
+              <div class="p-3 rounded-lg bg-white border border-slate-200">
+                <span class="text-slate-500 block">Emergency 911 Reroutes</span>
+                <span class="text-xl font-black text-slate-900 mt-1 block">142 Cases</span>
+                <span class="text-[11px] text-slate-600">Zero false negatives in cardiac/stroke red flags</span>
+              </div>
+
+              <div class="p-3 rounded-lg bg-white border border-slate-200">
+                <span class="text-slate-500 block">Drug Interaction Intercepts</span>
+                <span class="text-xl font-black text-slate-900 mt-1 block">389 Prevented</span>
+                <span class="text-[11px] text-slate-600">Blocked co-administration of conflicting NSAIDs</span>
+              </div>
+
+              <div class="p-3 rounded-lg bg-white border border-slate-200">
+                <span class="text-slate-500 block">Telehealth Escalation Rate</span>
+                <span class="text-xl font-black text-slate-900 mt-1 block">14.8%</span>
+                <span class="text-[11px] text-slate-600">Routed to licensed MD for prescription issuance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Emergency Triage Red-Flag Modal (Zero emojis) -->
+  <div id="emergency-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 border-2 border-red-500 shadow-2xl">
+      <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+
+      <div class="text-center">
+        <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold uppercase bg-red-100 text-red-800 border border-red-300">
+          Critical Red-Flag Emergency Detected
+        </span>
+        <h3 class="text-xl font-bold text-slate-900 mt-2">
+          Immediate Emergency Care Required
+        </h3>
+        <p class="text-xs text-slate-600 mt-2">
+          The Clinical Triage Agent identified life-threatening indicators in your reported symptoms: 
+          <span id="emergency-term-display" class="font-bold text-red-700">"CHEST PAIN"</span>. 
+          Autonomous medication suggestion is suspended to safeguard patient safety.
+        </p>
+      </div>
+
+      <div class="mt-6 p-4 rounded-xl bg-red-50 border border-red-200 space-y-2 text-xs text-red-900">
+        <div class="flex items-center space-x-2 font-bold">
+          <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span>Recommended Immediate Protocol:</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-800">
+          <li>Call Emergency Services (911 in US / 112 in EU / 102 in India) immediately.</li>
+          <li>Do not attempt to drive yourself to the emergency department.</li>
+          <li>Remain calm and seated in a comfortable upright position.</li>
+        </ul>
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <a href="tel:911" class="flex-1 py-3 text-center rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md shadow-red-600/30 transition">
+          Dial Emergency Services Now
+        </a>
+        <button onclick="closeEmergencyModal()" class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+          Dismiss Interlock
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clinical Footer -->
+  <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="font-bold text-slate-800">Medical Miracle</span>
+        <span>&bull; Clinical AI Decision Support Platform</span>
+      </div>
+      <div>
+        <span>Design Specification: Blue &amp; White Theme &bull; Cambria Math Typography &bull; React-Icons SVG Engine &bull; Zero Emojis</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

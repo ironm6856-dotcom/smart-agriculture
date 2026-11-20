@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}Farmer Dashboard | AI-Based Smart Agriculture Assistant{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-title">
+    <h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2">
+        <rect width="7" height="9" x="3" y="3" rx="1"/>
+        <rect width="7" height="5" x="14" y="3" rx="1"/>
+        <rect width="7" height="9" x="14" y="12" rx="1"/>
+        <rect width="7" height="5" x="3" y="16" rx="1"/>
+      </svg>
+      Farmer Operational Intelligence Dashboard
+    </h2>
+    <p>Precision agronomic recommendations, live agro-meteorology, and crop diagnostics</p>
+  </div>
+  <div>
+    <span class="badge badge-green" style="font-size: 0.85rem; padding: 6px 14px;">Farm Node: GCET Agro-Research Pilot</span>
+  </div>
+</div>
+
+<!-- KPI Stats Grid -->
+<div class="grid-4">
+  <div class="card stat-card">
+    <div>
+      <div class="label">Crop Recommendations</div>
+      <div class="num">{{ stats.total_recommendations }}</div>
+      <span style="font-size: 0.78rem; color: #059669; font-weight: 600;">99.3% Model Accuracy</span>
+    </div>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+    </svg>
+  </div>
+
+  <div class="card stat-card" style="border-left-color: #0284c7;">
+    <div>
+      <div class="label">Leaf Disease Scans</div>
+      <div class="num" style="color: #0284c7;">{{ stats.total_scans }}</div>
+      <span style="font-size: 0.78rem; color: #0284c7; font-weight: 600;">Deep Vision Pipeline</span>
+    </div>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2">
+      <path d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+    </svg>
+  </div>
+
+  <div class="card stat-card" style="border-left-color: #d97706;">
+    <div>
+      <div class="label">Irrigation Schedules</div>
+      <div class="num" style="color: #d97706;">{{ stats.total_irrigation_plans }}</div>
+      <span style="font-size: 0.78rem; color: #d97706; font-weight: 600;">Evapotranspiration Balanced</span>
+    </div>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2">
+      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+    </svg>
+  </div>
+
+  <div class="card stat-card" style="border-left-color: #10b981;">
+    <div>
+      <div class="label">Registered Land Area</div>
+      <div class="num" style="color: #10b981;">15.5 <span style="font-size: 1rem; font-weight: 500;">Acres</span></div>
+      <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">3 Active Farmer Profiles</span>
+    </div>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+      <rect width="18" height="18" x="3" y="3" rx="2"/>
+      <path d="M3 9h18M9 21V9"/>
+    </svg>
+  </div>
+</div>
+
+<!-- Weather Snapshot & Quick Advisories -->
+<div class="card" style="margin-bottom: 24px; background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); border-color: #a7f3d0;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="badge badge-green">Live Agro-Meteorology: {{ weather.region_name }}</span>
+      <h3 style="font-size: 1.5rem; color: #064e3b; margin-top: 6px;">
+        {{ weather.temperature }}°C &bull; Humidity: {{ weather.relative_humidity }}% &bull; Wind: {{ weather.wind_speed_kmh }} km/h
+      </h3>
+      <p style="color: #047857; font-size: 0.88rem; margin-top: 4px;">
+        Precipitation: {{ weather.current_precipitation }} mm &bull; Soil Temperature: 24.2°C (Optimal seed germination)
+      </p>
+    </div>
+    <div>
+      <a href="{{ url_for('weather_page') }}" class="btn btn-outline" style="background: white;">View 5-Day Forecast</a>
+    </div>
+  </div>
+
+  {% if weather.advisories %}
+  <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #bbf7d0; display: flex; flex-direction: column; gap: 8px;">
+    {% for adv in weather.advisories[:2] %}
+    <div style="font-size: 0.88rem; color: #14532d; display: flex; align-items: flex-start; gap: 8px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" style="flex-shrink: 0; margin-top: 2px;">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span><strong>{{ adv.title }}:</strong> {{ adv.text }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- Visual Charts Section (Chart.js) -->
+<div class="grid-2">
+  <div class="card">
+    <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+      <h3 style="font-size: 1.1rem; color: #064e3b;">Field Soil Fertility Profile (Radar)</h3>
+      <span class="badge badge-blue">NPK &amp; Physical</span>
+    </div>
+    <canvas id="soilRadarChart" height="220"></canvas>
+  </div>
+
+  <div class="card">
+    <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+      <h3 style="font-size: 1.1rem; color: #064e3b;">Cropping Pattern Suitability</h3>
+      <span class="badge badge-green">ML Distribution</span>
+    </div>
+    <canvas id="cropDistChart" height="220"></canvas>
+  </div>
+</div>
+
+<!-- Quick Module Launch Cards -->
+<div style="margin-bottom: 24px;">
+  <h3 style="font-size: 1.25rem; color: #064e3b; margin-bottom: 16px;">Core Agricultural Intelligence Modules</h3>
+  <div class="grid-4">
+    <div class="card" style="text-align: center; padding: 24px 16px;">
+      <div style="width: 48px; height: 48px; border-radius: 12px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+      </div>
+      <h4 style="color: #064e3b; margin-bottom: 6px;">Crop Recommender</h4>
+      <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 14px;">Trained on 22 crops with 99.3% accuracy on soil NPK &amp; rainfall.</p>
+      <a href="{{ url_for('crop_page') }}" class="btn btn-primary" style="width: 100%; font-size: 0.85rem; padding: 8px;">Run Model</a>
+    </div>
+
+    <div class="card" style="text-align: center; padding: 24px 16px;">
+      <div style="width: 48px; height: 48px; border-radius: 12px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+        </svg>
+      </div>
+      <h4 style="color: #064e3b; margin-bottom: 6px;">Plant Disease Scanner</h4>
+      <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 14px;">Upload or test leaves for blights, rusts, and healthy status.</p>
+      <a href="{{ url_for('disease_page') }}" class="btn btn-primary" style="width: 100%; font-size: 0.85rem; padding: 8px;">Scan Leaf</a>
+    </div>
+
+    <div class="card" style="text-align: center; padding: 24px 16px;">
+      <div style="width: 48px; height: 48px; border-radius: 12px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2v20M18 2v20M6 12h12"/>
+        </svg>
+      </div>
+      <h4 style="color: #064e3b; margin-bottom: 6px;">Fertilizer Calculator</h4>
+      <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 14px;">Scientific Urea, DAP, and MOP bag requirements per acre.</p>
+      <a href="{{ url_for('fertilizer_page') }}" class="btn btn-secondary" style="width: 100%; font-size: 0.85rem; padding: 8px;">Calculate</a>
+    </div>
+
+    <div class="card" style="text-align: center; padding: 24px 16px;">
+      <div style="width: 48px; height: 48px; border-radius: 12px; background: #ecfdf5; color: #10b981; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </svg>
+      </div>
+      <h4 style="color: #064e3b; margin-bottom: 6px;">Smart Irrigation</h4>
+      <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 14px;">Evapotranspiration and soil moisture water budgeting.</p>
+      <a href="{{ url_for('irrigation_page') }}" class="btn btn-primary" style="width: 100%; font-size: 0.85rem; padding: 8px;">Schedule</a>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity Tables from SQLite -->
+<div class="grid-2">
+  <div class="card">
+    <h3 style="font-size: 1.1rem; color: #064e3b; margin-bottom: 12px;">Recent Crop Recommendations</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+      <thead>
+        <tr style="text-align: left; border-bottom: 2px solid #e2e8f0; color: #64748b;">
+          <th style="padding: 8px 4px;">Crop</th>
+          <th style="padding: 8px 4px;">Confidence</th>
+          <th style="padding: 8px 4px;">Alternatives</th>
+          <th style="padding: 8px 4px;">Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in recent_crops %}
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 4px; font-weight: bold; color: #065f46;">{{ row['recommended_crop'] }}</td>
+          <td style="padding: 10px 4px;"><span class="badge badge-green">{{ row['confidence'] }}%</span></td>
+          <td style="padding: 10px 4px; color: #475569;">{{ row['alternative_crops'] }}</td>
+          <td style="padding: 10px 4px; color: #94a3b8; font-size: 0.75rem;">{{ row['created_at'][:16] }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" style="padding: 12px; text-align: center; color: #94a3b8;">No recommendations logged yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size: 1.1rem; color: #064e3b; margin-bottom: 12px;">Recent Leaf Scans</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+      <thead>
+        <tr style="text-align: left; border-bottom: 2px solid #e2e8f0; color: #64748b;">
+          <th style="padding: 8px 4px;">Pathology</th>
+          <th style="padding: 8px 4px;">Confidence</th>
+          <th style="padding: 8px 4px;">Severity</th>
+          <th style="padding: 8px 4px;">Scanned At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in recent_diseases %}
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 4px; font-weight: bold; color: #0f172a;">{{ row['detected_disease'] }}</td>
+          <td style="padding: 10px 4px;"><span class="badge badge-blue">{{ row['confidence'] }}%</span></td>
+          <td style="padding: 10px 4px;">{{ row['severity'] }}</td>
+          <td style="padding: 10px 4px; color: #94a3b8; font-size: 0.75rem;">{{ row['scanned_at'][:16] }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" style="padding: 12px; text-align: center; color: #94a3b8;">No disease scans logged yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

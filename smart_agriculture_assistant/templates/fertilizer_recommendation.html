@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Fertilizer Recommendation | AI-Based Smart Agriculture Assistant{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-title">
+    <h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2">
+        <path d="M6 2v20M18 2v20M6 12h12"/>
+      </svg>
+      Nutrient Balance &amp; Fertilizer Recommendation
+    </h2>
+    <p>Calculate precise commercial fertilizer dosages (Urea, DAP, MOP) based on soil test deficits and ICAR crop standards</p>
+  </div>
+  <div>
+    <span class="badge badge-amber">ICAR Agronomic Stoichiometry</span>
+  </div>
+</div>
+
+<div class="grid-2">
+  <!-- Input Form -->
+  <div class="card">
+    <h3 style="font-size: 1.2rem; color: #064e3b; margin-bottom: 16px;">Target Crop &amp; Soil Test Data</h3>
+    
+    <form id="fertForm">
+      <div class="form-group">
+        <label for="crop">Target Crop</label>
+        <select class="form-control" id="crop" name="crop" required>
+          <option value="rice">Rice / Paddy</option>
+          <option value="maize">Maize / Corn</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="tomato">Tomato</option>
+          <option value="potato">Potato</option>
+          <option value="chickpea">Chickpea / Bengal Gram</option>
+          <option value="banana">Banana</option>
+          <option value="sugarcane">Sugarcane</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nitrogen">Soil N (kg/ha)</label>
+          <input type="number" step="any" class="form-control" id="nitrogen" name="nitrogen" value="45" required min="0" max="300">
+        </div>
+        <div class="form-group">
+          <label for="phosphorus">Soil P (kg/ha)</label>
+          <input type="number" step="any" class="form-control" id="phosphorus" name="phosphorus" value="22" required min="0" max="300">
+        </div>
+        <div class="form-group">
+          <label for="potassium">Soil K (kg/ha)</label>
+          <input type="number" step="any" class="form-control" id="potassium" name="potassium" value="25" required min="0" max="400">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="acreage">Land Area (Acres)</label>
+        <input type="number" step="any" class="form-control" id="acreage" name="acreage" value="2.5" required min="0.1" max="100">
+      </div>
+
+      <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 12px; margin-top: 8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect width="18" height="18" x="3" y="3" rx="2"/>
+          <path d="M3 9h18M9 21V9"/>
+        </svg>
+        Calculate Required Fertilizer Dosage
+      </button>
+    </form>
+  </div>
+
+  <!-- Output Card -->
+  <div>
+    <div id="fertResultBox" class="result-box" style="background: #fffbeb; border-color: #fde68a;">
+      <span class="badge badge-amber" style="font-size: 0.85rem; padding: 6px 12px;">Nutrient Prescription Plan</span>
+      <h2 id="fertCropTitle" style="font-size: 1.8rem; color: #78350f; margin: 10px 0 4px 0;">--</h2>
+      
+      <!-- Deficits Overview -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; text-align: center;">
+        <div style="background: white; padding: 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+          <div style="font-size: 0.75rem; color: #92400e; font-weight: 700;">NITROGEN DEFICIT</div>
+          <div id="fertN" style="font-size: 1.25rem; font-weight: 800; color: #b45309;">--</div>
+        </div>
+        <div style="background: white; padding: 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+          <div style="font-size: 0.75rem; color: #92400e; font-weight: 700;">PHOSPHORUS DEFICIT</div>
+          <div id="fertP" style="font-size: 1.25rem; font-weight: 800; color: #b45309;">--</div>
+        </div>
+        <div style="background: white; padding: 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+          <div style="font-size: 0.75rem; color: #92400e; font-weight: 700;">POTASSIUM DEFICIT</div>
+          <div id="fertK" style="font-size: 1.25rem; font-weight: 800; color: #b45309;">--</div>
+        </div>
+      </div>
+
+      <!-- Commercial Bags Breakdown -->
+      <div style="background: white; padding: 16px; border-radius: var(--radius-sm); border: 1px solid #fde68a; margin-bottom: 14px;">
+        <h4 style="font-size: 0.9rem; color: #78350f; text-transform: uppercase; margin-bottom: 10px;">Recommended Commercial Fertilizers</h4>
+        <ul id="fertCommercialList" style="padding-left: 20px; list-style: disc;"></ul>
+      </div>
+
+      <!-- Split Timing -->
+      <div style="background: white; padding: 14px; border-radius: var(--radius-sm); border: 1px solid #fde68a; margin-bottom: 14px;">
+        <h4 style="font-size: 0.88rem; color: #78350f; text-transform: uppercase; margin-bottom: 4px;">Split Application Timing</h4>
+        <p id="fertSplits" style="font-size: 0.9rem; color: #1e293b;">--</p>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #92400e; line-height: 1.5;">
+        <strong>Organic Soil Amendment:</strong> <span id="fertOrganic">--</span>
+      </div>
+    </div>
+
+    <!-- Soil Health Tips Card -->
+    <div class="card" style="margin-top: 20px;">
+      <h4 style="color: #064e3b; margin-bottom: 8px;">The 4R Nutrient Stewardship Principle</h4>
+      <p style="font-size: 0.88rem; color: #475569;">
+        <strong>Right Source</strong> at the <strong>Right Rate</strong>, at the <strong>Right Time</strong>, in the <strong>Right Place</strong>. Incorporate bio-fertilizers (Azotobacter, Phosphobacteria) to increase nutrient use efficiency by up to 25%.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

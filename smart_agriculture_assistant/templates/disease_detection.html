@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Plant Disease Detection | AI-Based Smart Agriculture Assistant{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-title">
+    <h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2">
+        <path d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+      </svg>
+      Plant Leaf Disease Diagnostic Scanner
+    </h2>
+    <p>Computer Vision &amp; Deep Phenotypic Analysis to diagnose crop blights, rusts, and fungal pathogens</p>
+  </div>
+  <div>
+    <span class="badge badge-green">Multi-Crop Pathology Vision Model</span>
+  </div>
+</div>
+
+<div class="grid-2">
+  <!-- Scanner Input Form -->
+  <div class="card">
+    <h3 style="font-size: 1.2rem; color: #064e3b; margin-bottom: 12px;">Step 1: Upload or Select Leaf Image</h3>
+    
+    <form id="diseaseForm" enctype="multipart/form-data">
+      <input type="hidden" id="selectedSample" name="sample_choice" value="">
+      
+      <div class="form-group">
+        <label>Upload From Device / Camera</label>
+        <input type="file" id="leafImageInput" name="leaf_image" accept="image/*" class="form-control">
+      </div>
+
+      <!-- Quick-Test Sample Leaves -->
+      <div class="form-group">
+        <label>Or Click a Sample Test Leaf (One-Click Diagnostic):</label>
+        <div class="sample-leaf-grid">
+          {% for leaf in sample_leaves %}
+          <div class="sample-leaf-card" data-file="{{ leaf.file }}">
+            <img src="{{ url_for('static', filename='images/sample_leaves/' + leaf.file) }}" alt="{{ leaf.name }}">
+            <span>{{ leaf.name }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Image Preview -->
+      <div style="text-align: center; margin: 16px 0;">
+        <img id="leafPreview" src="" alt="Selected Leaf Preview" style="max-width: 200px; height: auto; border-radius: 8px; border: 2px solid #e2e8f0; display: none; margin: 0 auto;">
+      </div>
+
+      <div class="form-group">
+        <label for="crop_hint">Crop Category (Optional Hint)</label>
+        <select class="form-control" id="crop_hint" name="crop_hint">
+          <option value="">Auto-Detect Crop</option>
+          <option value="Tomato">Tomato</option>
+          <option value="Potato">Potato</option>
+          <option value="Corn">Corn / Maize</option>
+          <option value="Apple">Apple</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Analyze &amp; Diagnose Leaf Pathology
+      </button>
+    </form>
+  </div>
+
+  <!-- Diagnostic Output Card -->
+  <div>
+    <div id="diseaseResultBox" class="result-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <span id="resSeverity" class="badge">--</span>
+        <span id="resConfidence" style="font-weight: 700; color: #059669; font-size: 0.95rem;">--</span>
+      </div>
+
+      <h2 id="resDisease" style="font-size: 1.8rem; color: #064e3b; margin-bottom: 4px;">--</h2>
+      <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 16px;">
+        Causative Pathogen: <strong id="resPathogen" style="color: #0f172a;">--</strong>
+      </p>
+
+      <div style="background: white; border-radius: var(--radius-sm); padding: 14px; border: 1px solid #d1fae5; margin-bottom: 14px;">
+        <h4 style="font-size: 0.88rem; color: #475569; text-transform: uppercase; margin-bottom: 4px;">Observed Symptoms</h4>
+        <p id="resSymptoms" style="font-size: 0.9rem; color: #1e293b;">--</p>
+      </div>
+
+      <div style="background: white; border-radius: var(--radius-sm); padding: 14px; border: 1px solid #d1fae5; margin-bottom: 14px;">
+        <h4 style="font-size: 0.88rem; color: #166534; text-transform: uppercase; margin-bottom: 4px;">Organic &amp; Biological Management</h4>
+        <p id="resOrganic" style="font-size: 0.9rem; color: #1e293b;">--</p>
+      </div>
+
+      <div style="background: white; border-radius: var(--radius-sm); padding: 14px; border: 1px solid #d1fae5; margin-bottom: 14px;">
+        <h4 style="font-size: 0.88rem; color: #991b1b; text-transform: uppercase; margin-bottom: 4px;">Targeted Chemical Treatment (Dosage)</h4>
+        <p id="resChemical" style="font-size: 0.9rem; color: #1e293b;">--</p>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #475569;">
+        <strong>Preventive Cultural Practices:</strong> <span id="resPrevention">--</span>
+      </div>
+    </div>
+
+    <!-- Quick Reference Card -->
+    <div class="card" style="margin-top: 20px;">
+      <h4 style="color: #064e3b; margin-bottom: 8px;">Diagnostic Guidelines for Best Results</h4>
+      <ul style="font-size: 0.85rem; color: #475569; padding-left: 20px; line-height: 1.6;">
+        <li>Take leaf photos under even daylight avoiding direct harsh flash glare.</li>
+        <li>Focus on the transition zone between healthy green tissue and symptomatic lesions.</li>
+        <li>Clean the camera lens to prevent blurry focus on fine fungal pustules.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

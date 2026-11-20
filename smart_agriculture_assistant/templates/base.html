@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AI-Based Smart Agriculture Assistant{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Chart.js CDN for interactive visual analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="nav-brand">
+      <div class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>AgriSmart AI</h1>
+        <p>Smart Agriculture Decision Assistant</p>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="{{ url_for('dashboard') }}" class="{% if request.path == '/' %}active{% endif %}">Dashboard</a></li>
+      <li><a href="{{ url_for('crop_page') }}" class="{% if request.path == '/crop' %}active{% endif %}">Crop Recommendation</a></li>
+      <li><a href="{{ url_for('disease_page') }}" class="{% if request.path == '/disease' %}active{% endif %}">Plant Disease</a></li>
+      <li><a href="{{ url_for('fertilizer_page') }}" class="{% if request.path == '/fertilizer' %}active{% endif %}">Fertilizer Guide</a></li>
+      <li><a href="{{ url_for('weather_page') }}" class="{% if request.path == '/weather' %}active{% endif %}">Agro Weather</a></li>
+      <li><a href="{{ url_for('irrigation_page') }}" class="{% if request.path == '/irrigation' %}active{% endif %}">Smart Irrigation</a></li>
+      <li><a href="{{ url_for('chatbot_page') }}" class="{% if request.path == '/chatbot' %}active{% endif %}">AI Assistant</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Global Footer -->
+  <footer>
+    <p><strong>AI-Based Smart Agriculture Assistant</strong> &bull; Machine Learning &amp; Deep Learning Decision Support Platform</p>
+    <p style="margin-top: 6px; font-size: 0.8rem; color: #64748b;">Powered by Python Flask, Scikit-Learn, Deep Phenotypic Classifiers &amp; SQLite</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

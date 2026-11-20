@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Irrigation | AI-Based Smart Agriculture Assistant{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-title">
+    <h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+      Smart Evapotranspiration &amp; Soil Moisture Irrigation Planner
+    </h2>
+    <p>Optimize irrigation volumes using soil volumetric water content (% VWC), crop growth stage (Kc), and rain forecast</p>
+  </div>
+  <div>
+    <span class="badge badge-green">Penman-Monteith ETc Algorithm</span>
+  </div>
+</div>
+
+<div class="grid-2">
+  <!-- Input Form -->
+  <div class="card">
+    <h3 style="font-size: 1.2rem; color: #064e3b; margin-bottom: 16px;">Irrigation Parameters</h3>
+    
+    <form id="irrigForm">
+      <div class="form-group">
+        <label for="crop_name">Crop Type</label>
+        <select class="form-control" id="crop_name" name="crop_name" required>
+          <option value="Tomato">Tomato (Horticulture)</option>
+          <option value="Rice">Rice / Paddy</option>
+          <option value="Maize">Maize / Corn</option>
+          <option value="Cotton">Cotton</option>
+          <option value="Potato">Potato</option>
+          <option value="Banana">Banana</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="soil_texture">Soil Texture</label>
+          <select class="form-control" id="soil_texture" name="soil_texture" required>
+            <option value="loamy" selected>Loam / Medium Texture (AWC: 140 mm/m)</option>
+            <option value="sandy">Sandy / Light (AWC: 70 mm/m)</option>
+            <option value="clay">Clay / Heavy Black Cotton (AWC: 200 mm/m)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="stage">Growth Phenology Stage</label>
+          <select class="form-control" id="stage" name="stage" required>
+            <option value="vegetative" selected>Vegetative Growth (Kc = 0.85)</option>
+            <option value="initial">Initial / Germination (Kc = 0.45)</option>
+            <option value="flowering">Flowering / Fruit Set (Kc = 1.15)</option>
+            <option value="maturity">Ripening / Maturity (Kc = 0.65)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="soil_moisture">Current Soil Moisture (% VWC)</label>
+          <input type="number" step="0.5" class="form-control" id="soil_moisture" name="soil_moisture" value="18.5" required min="5" max="60">
+          <small style="color: #64748b; font-size: 0.75rem;">From telemetry probe or hand test</small>
+        </div>
+
+        <div class="form-group">
+          <label for="rain_forecast">Next 48h Rain Forecast (mm)</label>
+          <input type="number" step="0.5" class="form-control" id="rain_forecast" name="rain_forecast" value="0.0" min="0" max="150">
+          <small style="color: #64748b; font-size: 0.75rem;">Synced with agro-weather station</small>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Compute Irrigation Schedule &amp; Runtime
+      </button>
+    </form>
+  </div>
+
+  <!-- Output Display -->
+  <div>
+    <div id="irrigResultBox" class="result-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span id="irrigDecision" class="badge badge-green" style="font-size: 0.95rem; padding: 6px 14px;">--</span>
+        <span style="font-size: 0.85rem; color: #64748b; font-weight: 600;">Crop ETc: <strong id="irrigETc" style="color: #059669;">--</strong></span>
+      </div>
+
+      <p id="irrigReason" style="font-size: 1rem; color: #1e293b; margin-bottom: 16px; font-weight: 500;">--</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+        <div style="background: white; padding: 16px; border-radius: var(--radius-sm); border: 1px solid #d1fae5; text-align: center;">
+          <div style="font-size: 0.75rem; color: #475569; font-weight: 700; text-transform: uppercase;">Water Volume Needed</div>
+          <div id="irrigWater" style="font-size: 1.25rem; font-weight: 800; color: #064e3b; margin-top: 4px;">--</div>
+        </div>
+        <div style="background: white; padding: 16px; border-radius: var(--radius-sm); border: 1px solid #d1fae5; text-align: center;">
+          <div style="font-size: 0.75rem; color: #475569; font-weight: 700; text-transform: uppercase;">Drip Pump Runtime</div>
+          <div id="irrigHours" style="font-size: 1.25rem; font-weight: 800; color: #0284c7; margin-top: 4px;">--</div>
+          <span style="font-size: 0.72rem; color: #64748b;">@ 4,000 L/hr emitter rate</span>
+        </div>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #166534; line-height: 1.5;">
+        <strong>Best Irrigation Practice:</strong> Schedule drip cycles during early morning (6:00 AM - 9:00 AM) or late evening to minimize evaporative loss and prevent fungal foliar diseases.
+      </div>
+    </div>
+
+    <!-- Soil Moisture Reference -->
+    <div class="card" style="margin-top: 20px;">
+      <h4 style="color: #064e3b; margin-bottom: 8px;">Soil Moisture Water Management Zones</h4>
+      <div style="font-size: 0.85rem; color: #475569; line-height: 1.6;">
+        <p><strong>Field Capacity (FC):</strong> 100% available water after drainage.</p>
+        <p><strong>Management Allowed Depletion (MAD):</strong> Typically 45-50% depletion before water stress sets in.</p>
+        <p><strong>Permanent Wilting Point (PWP):</strong> Critical boundary where roots can no longer extract capillary moisture.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
